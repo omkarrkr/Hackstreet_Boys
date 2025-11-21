@@ -14,17 +14,30 @@ CREATE TABLE IF NOT EXISTS users (
   updated_at TIMESTAMP DEFAULT NOW()
 );
 
+-- Create enums for goals
+DO $$ BEGIN
+  CREATE TYPE goal_priority AS ENUM ('low', 'medium', 'high');
+EXCEPTION
+  WHEN duplicate_object THEN null;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE goal_status AS ENUM ('not_started', 'in_progress', 'completed');
+EXCEPTION
+  WHEN duplicate_object THEN null;
+END $$;
+
 -- Goals table
 CREATE TABLE IF NOT EXISTS goals (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   title VARCHAR(255) NOT NULL,
   description TEXT,
   category VARCHAR(100),
   target_date DATE,
-  priority VARCHAR(20) DEFAULT 'medium',
-  status VARCHAR(20) DEFAULT 'not_started',
-  progress_percentage INTEGER DEFAULT 0,
+  priority goal_priority DEFAULT 'medium',
+  status goal_status DEFAULT 'not_started',
+  progress_percentage INTEGER DEFAULT 0 CHECK (progress_percentage >= 0 AND progress_percentage <= 100),
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
 );

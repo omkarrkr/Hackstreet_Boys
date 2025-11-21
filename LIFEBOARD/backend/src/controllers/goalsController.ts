@@ -75,6 +75,34 @@ export const getGoalSteps = async (req: AuthRequest, res: Response) => {
   }
 };
 
+export const updateGoalStep = async (req: AuthRequest, res: Response) => {
+  try {
+    const { id, stepId } = req.params;
+    const step = await GoalModel.updateGoalStep(stepId, id, req.body);
+    
+    // Recalculate goal progress
+    const progress = await GoalModel.calculateGoalProgress(id);
+    
+    return successResponse(res, { step, progress }, 'Goal step updated');
+  } catch (error: any) {
+    return errorResponse(res, 'Failed to update goal step', 500, error);
+  }
+};
+
+export const deleteGoalStep = async (req: AuthRequest, res: Response) => {
+  try {
+    const { id, stepId } = req.params;
+    await GoalModel.deleteGoalStep(stepId, id);
+    
+    // Recalculate goal progress
+    const progress = await GoalModel.calculateGoalProgress(id);
+    
+    return successResponse(res, { progress }, 'Goal step deleted');
+  } catch (error: any) {
+    return errorResponse(res, 'Failed to delete goal step', 500, error);
+  }
+};
+
 export const generateAIRoadmap = async (req: AuthRequest, res: Response) => {
   try {
     const { goalTitle, description, timeframe } = req.body;
