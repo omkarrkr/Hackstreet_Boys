@@ -73,3 +73,47 @@ export const createGoalStep = async (
   if (error) throw error;
   return data;
 };
+
+export const updateGoalStep = async (
+  stepId: string,
+  goalId: string,
+  updates: Partial<GoalStep>
+): Promise<GoalStep> => {
+  const { data, error } = await supabase
+    .from('goal_steps')
+    .update(updates)
+    .eq('id', stepId)
+    .eq('goal_id', goalId)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+};
+
+export const deleteGoalStep = async (stepId: string, goalId: string): Promise<void> => {
+  const { error } = await supabase
+    .from('goal_steps')
+    .delete()
+    .eq('id', stepId)
+    .eq('goal_id', goalId);
+
+  if (error) throw error;
+};
+
+export const calculateGoalProgress = async (goalId: string): Promise<number> => {
+  const steps = await getGoalSteps(goalId);
+  
+  if (steps.length === 0) return 0;
+  
+  const completedSteps = steps.filter(step => step.completed).length;
+  const progress = Math.round((completedSteps / steps.length) * 100);
+  
+  // Update the goal's progress
+  await supabase
+    .from('goals')
+    .update({ progress_percentage: progress })
+    .eq('id', goalId);
+  
+  return progress;
+};

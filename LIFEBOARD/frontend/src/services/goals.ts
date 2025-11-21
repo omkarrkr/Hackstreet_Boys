@@ -31,6 +31,15 @@ export const goalsService = {
     return response.data.data;
   },
 
+  updateStep: async (goalId: string, stepId: string, data: Partial<GoalStep>) => {
+    const response = await api.put(`/goals/${goalId}/steps/${stepId}`, data);
+    return response.data.data;
+  },
+
+  deleteStep: async (goalId: string, stepId: string): Promise<void> => {
+    await api.delete(`/goals/${goalId}/steps/${stepId}`);
+  },
+
   generateRoadmap: async (data: { goalTitle: string; description?: string; timeframe?: string }) => {
     const response = await api.post('/goals/ai-roadmap', data);
     return response.data.data;

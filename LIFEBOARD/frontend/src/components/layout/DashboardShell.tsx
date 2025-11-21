@@ -1,17 +1,13 @@
 import { Outlet } from 'react-router-dom';
-import { Navbar } from './Navbar';
 import { Sidebar } from './Sidebar';
 
 export const DashboardShell = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <div className="flex">
-        <Sidebar />
-        <main className="flex-1 p-8">
-          <Outlet />
-        </main>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex">
+      <Sidebar />
+      <main className="flex-1">
+        <Outlet />
+      </main>
     </div>
   );
 };
