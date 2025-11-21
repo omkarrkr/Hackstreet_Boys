@@ -1,0 +1,75 @@
+═══════════════════════════════════════════════════════════════════
+  COPY THIS MESSAGE AND SEND TO YOUR CONTRIBUTORS
+═══════════════════════════════════════════════════════════════════
+
+Hey team! 👋
+
+Welcome to LifeBoard! Here's how to get set up:
+
+📋 QUICK SETUP (10 minutes):
+
+1. Clone the repo:
+   git clone <YOUR_REPO_URL_HERE>
+   cd LIFEBOARD
+
+2. Install dependencies:
+   cd backend && npm install && cd ..
+   cd frontend && npm install && cd ..
+
+3. Get Supabase credentials (I'll send these separately):
+   - SUPABASE_URL
+   - SUPABASE_ANON_KEY
+
+4. Create backend/.env file:
+   cd backend
+   copy .env.example .env
+   
+   Then open backend/.env and paste the credentials I sent you.
+
+5. Start the servers:
+   cd ..
+   .\start-dev.ps1
+   
+   (Or manually: backend in one terminal, frontend in another)
+
+6. Open http://localhost:5173 in your browser
+
+📚 IMPORTANT FILES TO READ:
+
+✅ NEW-CONTRIBUTOR-CHECKLIST.md - Step-by-step setup
+✅ CONTRIBUTING.md - How to contribute
+✅ FRONTEND-EXAMPLE.md - Code examples to copy
+✅ PROJECT-STATUS.md - What needs to be built
+
+🎯 WHAT TO WORK ON:
+
+Check PROJECT-STATUS.md for the full list. Priority tasks:
+- Login page
+- Register page  
+- Dashboard layout
+- Feature pages (Goals, Finances, Habits, etc.)
+
+All code examples are in FRONTEND-EXAMPLE.md - just copy and adapt!
+
+💬 QUESTIONS?
+
+- Check the documentation files first
+- Ask in our team chat
+- Create an issue on GitHub
+
+Let me know once you're set up! 🚀
+
+═══════════════════════════════════════════════════════════════════
+  SUPABASE CREDENTIALS (Send this separately in a private message)
+═══════════════════════════════════════════════════════════════════
+
+Here are the Supabase credentials for development:
+
+SUPABASE_URL=<PASTE_YOUR_URL_HERE>
+SUPABASE_ANON_KEY=<PASTE_YOUR_KEY_HERE>
+
+Add these to your backend/.env file.
+
+⚠️ Keep these private - don't share publicly or commit to Git!
+
+═══════════════════════════════════════════════════════════════════
