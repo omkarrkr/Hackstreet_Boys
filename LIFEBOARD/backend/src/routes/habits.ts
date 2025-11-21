@@ -6,6 +6,7 @@ const router = Router();
 
 router.use(authMiddleware);
 
+router.get('/summary', habitsController.getHabitsSummary);
 router.get('/', habitsController.getHabits);
 router.post('/', habitsController.createHabit);
 router.put('/:id', habitsController.updateHabit);

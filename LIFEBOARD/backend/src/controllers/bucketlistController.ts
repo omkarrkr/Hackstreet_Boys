@@ -46,3 +46,25 @@ export const deleteBucketItem = async (req: AuthRequest, res: Response) => {
     return errorResponse(res, 'Failed to delete bucket list item', 500, error);
   }
 };
+
+export const updateBucketItemStatus = async (req: AuthRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    const item = await BucketItemModel.updateBucketItem(id, req.user!.userId, { status });
+    return successResponse(res, item, 'Status updated');
+  } catch (error: any) {
+    return errorResponse(res, 'Failed to update status', 500, error);
+  }
+};
+
+export const getBucketListSummary = async (req: AuthRequest, res: Response) => {
+  try {
+    const category = req.query.category as string || 'all';
+    const status = req.query.status as string || 'all';
+    const summary = await BucketItemModel.getBucketListSummary(req.user!.userId, category, status);
+    return successResponse(res, summary);
+  } catch (error: any) {
+    return errorResponse(res, 'Failed to fetch bucket list summary', 500, error);
+  }
+};

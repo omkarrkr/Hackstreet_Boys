@@ -1,9 +1,21 @@
 import { api } from './api';
 import { Habit, HabitLog } from '../types/Habit';
 
+interface HabitSummary extends Habit {
+  completed_today: boolean;
+  current_streak: number;
+  longest_streak: number;
+}
+
 export const habitsService = {
   getAll: async (): Promise<Habit[]> => {
     const response = await api.get('/habits');
+    return response.data.data;
+  },
+
+  getSummary: async (date?: string): Promise<HabitSummary[]> => {
+    const params = date ? { date } : {};
+    const response = await api.get('/habits/summary', { params });
     return response.data.data;
   },
 

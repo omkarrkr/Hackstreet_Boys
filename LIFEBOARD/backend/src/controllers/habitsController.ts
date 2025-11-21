@@ -73,3 +73,13 @@ export const getHabitLogs = async (req: AuthRequest, res: Response) => {
     return errorResponse(res, 'Failed to fetch habit logs', 500, error);
   }
 };
+
+export const getHabitsSummary = async (req: AuthRequest, res: Response) => {
+  try {
+    const date = req.query.date as string || new Date().toISOString().split('T')[0];
+    const summary = await HabitModel.getHabitsSummaryForDate(req.user!.userId, date);
+    return successResponse(res, summary);
+  } catch (error: any) {
+    return errorResponse(res, 'Failed to fetch habits summary', 500, error);
+  }
+};
