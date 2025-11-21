@@ -1,5 +1,5 @@
--- LifeBoard Database Setup Script
--- Run this in Supabase SQL Editor
+-- LifeBoard Database Schema
+-- Run this in your Supabase SQL Editor
 
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -145,14 +145,14 @@ CREATE TABLE IF NOT EXISTS bucket_items (
   updated_at TIMESTAMP DEFAULT NOW()
 );
 
--- Create indexes for better performance
+-- Create indexes for better query performance
 CREATE INDEX IF NOT EXISTS idx_goals_user_id ON goals(user_id);
+CREATE INDEX IF NOT EXISTS idx_goal_steps_goal_id ON goal_steps(goal_id);
 CREATE INDEX IF NOT EXISTS idx_transactions_user_id ON transactions(user_id);
+CREATE INDEX IF NOT EXISTS idx_budgets_user_id ON budgets(user_id);
 CREATE INDEX IF NOT EXISTS idx_habits_user_id ON habits(user_id);
+CREATE INDEX IF NOT EXISTS idx_habit_logs_habit_id ON habit_logs(habit_id);
 CREATE INDEX IF NOT EXISTS idx_tasks_user_id ON tasks(user_id);
 CREATE INDEX IF NOT EXISTS idx_health_metrics_user_id ON health_metrics(user_id);
 CREATE INDEX IF NOT EXISTS idx_workouts_user_id ON workouts(user_id);
 CREATE INDEX IF NOT EXISTS idx_bucket_items_user_id ON bucket_items(user_id);
-
--- Success message
-SELECT 'Database setup complete! All tables created successfully.' AS message;
