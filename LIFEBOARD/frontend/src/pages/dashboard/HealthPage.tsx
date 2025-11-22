@@ -11,6 +11,7 @@ export const HealthPage = () => {
   const [isMetricModalOpen, setIsMetricModalOpen] = useState(false);
   const [isWorkoutModalOpen, setIsWorkoutModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [period, setPeriod] = useState<'week' | 'month'>('week');
 
   const [metricForm, setMetricForm] = useState({
     date: new Date().toISOString().split('T')[0],
@@ -115,7 +116,10 @@ export const HealthPage = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-slate-400">Loading health data...</p>
+        </div>
       </div>
     );
   }
@@ -142,46 +146,75 @@ export const HealthPage = () => {
   const totalCalories = workouts.reduce((sum, w) => sum + (w.calories_burned || 0), 0);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold text-white">Health & Fitness</h1>
-          <div className="flex gap-3">
+        <div className="mb-8">
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <h1 className="text-4xl font-bold text-white mb-2">Health & Fitness</h1>
+              <p className="text-slate-400">Track your health metrics and workout progress</p>
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setIsMetricModalOpen(true)}
+                className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all shadow-lg hover:shadow-cyan-500/30"
+              >
+                + Log Metric
+              </button>
+              <button
+                onClick={() => setIsWorkoutModalOpen(true)}
+                className="px-6 py-3 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-all"
+              >
+                + Log Workout
+              </button>
+            </div>
+          </div>
+
+          {/* Period Filter */}
+          <div className="flex gap-2">
             <button
-              onClick={() => setIsMetricModalOpen(true)}
-              className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-lg hover:from-purple-600 hover:to-pink-700 transition-all shadow-lg"
+              onClick={() => setPeriod('week')}
+              className={`px-4 py-2 rounded-lg transition-all ${
+                period === 'week'
+                  ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
+                  : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700/50 border border-slate-700/50'
+              }`}
             >
-              + Log Metric
+              Week
             </button>
             <button
-              onClick={() => setIsWorkoutModalOpen(true)}
-              className="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-600 text-white rounded-lg hover:from-blue-600 hover:to-cyan-700 transition-all shadow-lg"
+              onClick={() => setPeriod('month')}
+              className={`px-4 py-2 rounded-lg transition-all ${
+                period === 'month'
+                  ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
+                  : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700/50 border border-slate-700/50'
+              }`}
             >
-              + Log Workout
+              Month
             </button>
           </div>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl p-6 shadow-xl">
-            <p className="text-purple-100 text-sm mb-2">Current Weight</p>
+          <div className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-xl p-6 hover:border-cyan-500/50 transition-all">
+            <p className="text-slate-400 text-sm mb-2">Current Weight</p>
             <p className="text-3xl font-bold text-white">
               {latestMetric?.weight ? `${latestMetric.weight} kg` : 'N/A'}
             </p>
           </div>
-          <div className="bg-gradient-to-br from-blue-600 to-cyan-600 rounded-xl p-6 shadow-xl">
-            <p className="text-blue-100 text-sm mb-2">Last Sleep</p>
+          <div className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-xl p-6 hover:border-cyan-500/50 transition-all">
+            <p className="text-slate-400 text-sm mb-2">Last Sleep</p>
             <p className="text-3xl font-bold text-white">
               {latestMetric?.sleep_hours ? `${latestMetric.sleep_hours}h` : 'N/A'}
             </p>
           </div>
-          <div className="bg-gradient-to-br from-emerald-600 to-teal-600 rounded-xl p-6 shadow-xl">
-            <p className="text-emerald-100 text-sm mb-2">Total Workouts</p>
+          <div className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-xl p-6 hover:border-cyan-500/50 transition-all">
+            <p className="text-slate-400 text-sm mb-2">Total Workouts</p>
             <p className="text-3xl font-bold text-white">{totalWorkouts}</p>
           </div>
-          <div className="bg-gradient-to-br from-orange-600 to-red-600 rounded-xl p-6 shadow-xl">
-            <p className="text-orange-100 text-sm mb-2">Calories Burned</p>
+          <div className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-xl p-6 hover:border-cyan-500/50 transition-all">
+            <p className="text-slate-400 text-sm mb-2">Calories Burned</p>
             <p className="text-3xl font-bold text-white">{totalCalories}</p>
           </div>
         </div>
@@ -189,7 +222,7 @@ export const HealthPage = () => {
         {/* Charts */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {weightData.length > 0 && (
-            <div className="bg-gray-800 rounded-xl p-6 shadow-xl">
+            <div className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-xl p-6">
               <h2 className="text-xl font-semibold text-white mb-4">Weight Trend</h2>
               <ResponsiveContainer width="100%" height={250}>
                 <LineChart data={weightData}>
@@ -197,14 +230,14 @@ export const HealthPage = () => {
                   <XAxis dataKey="date" stroke="#9ca3af" />
                   <YAxis stroke="#9ca3af" />
                   <Tooltip contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }} />
-                  <Line type="monotone" dataKey="weight" stroke="#a855f7" strokeWidth={2} dot={{ fill: '#a855f7' }} />
+                  <Line type="monotone" dataKey="weight" stroke="#06b6d4" strokeWidth={2} dot={{ fill: '#06b6d4' }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
           )}
 
           {sleepData.length > 0 && (
-            <div className="bg-gray-800 rounded-xl p-6 shadow-xl">
+            <div className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-xl p-6">
               <h2 className="text-xl font-semibold text-white mb-4">Sleep Pattern</h2>
               <ResponsiveContainer width="100%" height={250}>
                 <LineChart data={sleepData}>
@@ -212,6 +245,7 @@ export const HealthPage = () => {
                   <XAxis dataKey="date" stroke="#9ca3af" />
                   <YAxis stroke="#9ca3af" />
                   <Tooltip contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }} />
+                  <ReferenceLine y={8} stroke="#10b981" strokeDasharray="3 3" label={{ value: 'Recommended', fill: '#10b981', fontSize: 12 }} />
                   <Line type="monotone" dataKey="hours" stroke="#3b82f6" strokeWidth={2} dot={{ fill: '#3b82f6' }} />
                 </LineChart>
               </ResponsiveContainer>
@@ -219,22 +253,92 @@ export const HealthPage = () => {
           )}
         </div>
 
+        {/* Quick Actions */}
+        <div className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-xl p-6 mb-8">
+          <h3 className="text-lg font-semibold text-white mb-4">Quick Actions</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <button
+              onClick={() => setIsMetricModalOpen(true)}
+              className="flex items-center gap-2 px-4 py-3 bg-slate-700/50 hover:bg-slate-600/50 text-white rounded-lg transition-all border border-slate-600/50 hover:border-cyan-500/50"
+            >
+              <span className="text-2xl">⚖️</span>
+              <span className="text-sm">Log Weight</span>
+            </button>
+            <button
+              onClick={() => setIsMetricModalOpen(true)}
+              className="flex items-center gap-2 px-4 py-3 bg-slate-700/50 hover:bg-slate-600/50 text-white rounded-lg transition-all border border-slate-600/50 hover:border-cyan-500/50"
+            >
+              <span className="text-2xl">😴</span>
+              <span className="text-sm">Log Sleep</span>
+            </button>
+            <button
+              onClick={() => setIsMetricModalOpen(true)}
+              className="flex items-center gap-2 px-4 py-3 bg-slate-700/50 hover:bg-slate-600/50 text-white rounded-lg transition-all border border-slate-600/50 hover:border-cyan-500/50"
+            >
+              <span className="text-2xl">💧</span>
+              <span className="text-sm">Log Water</span>
+            </button>
+            <button
+              onClick={() => setIsWorkoutModalOpen(true)}
+              className="flex items-center gap-2 px-4 py-3 bg-slate-700/50 hover:bg-slate-600/50 text-white rounded-lg transition-all border border-slate-600/50 hover:border-cyan-500/50"
+            >
+              <span className="text-2xl">🏃</span>
+              <span className="text-sm">Quick Workout</span>
+            </button>
+          </div>
+        </div>
+
         {/* Recent Metrics */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <div className="bg-gray-800 rounded-xl shadow-xl overflow-hidden">
-            <div className="p-6 border-b border-gray-700">
+          <div className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-xl overflow-hidden">
+            <div className="p-6 border-b border-slate-700/50">
               <h2 className="text-2xl font-semibold text-white">Recent Metrics</h2>
             </div>
             <div className="p-6">
               {metrics.length === 0 ? (
-                <p className="text-gray-400 text-center py-8">No metrics logged yet</p>
+                <p className="text-slate-400 text-center py-8">No metrics logged yet</p>
               ) : (
                 <div className="space-y-4">
                   {metrics.slice(0, 5).map((metric) => (
-                    <div key={metric.id} className="bg-gray-700 rounded-lg p-4">
-                      <p className="text-gray-300 text-sm mb-2">
-                        {new Date(metric.date).toLocaleDateString()}
-                      </p>
+                    <div key={metric.id} className="bg-slate-700/50 border border-slate-600/50 rounded-lg p-4 hover:bg-slate-600/50 hover:border-cyan-500/50 transition-all">
+                      <div className="flex justify-between items-start mb-2">
+                        <p className="text-gray-300 text-sm">
+                          {new Date(metric.date).toLocaleDateString()}
+                        </p>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => {
+                              setMetricForm({
+                                date: metric.date.split('T')[0],
+                                weight: metric.weight?.toString() || '',
+                                sleep_hours: metric.sleep_hours?.toString() || '',
+                                water_intake: metric.water_intake?.toString() || '',
+                                mood: metric.mood || 'good',
+                                notes: metric.notes || ''
+                              });
+                              setIsMetricModalOpen(true);
+                            }}
+                            className="text-blue-400 hover:text-blue-300 text-xs"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={async () => {
+                              if (confirm('Delete this metric?')) {
+                                try {
+                                  await healthService.deleteMetric(metric.id);
+                                  await loadData();
+                                } catch (error) {
+                                  console.error('Failed to delete:', error);
+                                }
+                              }
+                            }}
+                            className="text-red-400 hover:text-red-300 text-xs"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
                       <div className="grid grid-cols-2 gap-2 text-sm">
                         {metric.weight && (
                           <div>
@@ -269,22 +373,57 @@ export const HealthPage = () => {
           </div>
 
           {/* Recent Workouts */}
-          <div className="bg-gray-800 rounded-xl shadow-xl overflow-hidden">
-            <div className="p-6 border-b border-gray-700">
+          <div className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-xl overflow-hidden">
+            <div className="p-6 border-b border-slate-700/50">
               <h2 className="text-2xl font-semibold text-white">Recent Workouts</h2>
             </div>
             <div className="p-6">
               {workouts.length === 0 ? (
-                <p className="text-gray-400 text-center py-8">No workouts logged yet</p>
+                <p className="text-slate-400 text-center py-8">No workouts logged yet</p>
               ) : (
                 <div className="space-y-4">
                   {workouts.slice(0, 5).map((workout) => (
-                    <div key={workout.id} className="bg-gray-700 rounded-lg p-4">
+                    <div key={workout.id} className="bg-slate-700/50 border border-slate-600/50 rounded-lg p-4 hover:bg-slate-600/50 hover:border-cyan-500/50 transition-all">
                       <div className="flex justify-between items-start mb-2">
-                        <h3 className="text-white font-semibold">{workout.type}</h3>
-                        <span className="text-gray-400 text-sm">
-                          {new Date(workout.date).toLocaleDateString()}
-                        </span>
+                        <div className="flex-1">
+                          <h3 className="text-white font-semibold">{workout.type}</h3>
+                          <span className="text-gray-400 text-sm">
+                            {new Date(workout.date).toLocaleDateString()}
+                          </span>
+                        </div>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => {
+                              setWorkoutForm({
+                                date: workout.date.split('T')[0],
+                                type: workout.type,
+                                duration_minutes: workout.duration_minutes.toString(),
+                                intensity: workout.intensity,
+                                calories_burned: workout.calories_burned?.toString() || '',
+                                notes: workout.notes || ''
+                              });
+                              setIsWorkoutModalOpen(true);
+                            }}
+                            className="text-blue-400 hover:text-blue-300 text-xs"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={async () => {
+                              if (confirm('Delete this workout?')) {
+                                try {
+                                  await healthService.deleteWorkout(workout.id);
+                                  await loadData();
+                                } catch (error) {
+                                  console.error('Failed to delete:', error);
+                                }
+                              }
+                            }}
+                            className="text-red-400 hover:text-red-300 text-xs"
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </div>
                       <div className="flex gap-4 text-sm">
                         <div>
@@ -356,11 +495,11 @@ export const HealthPage = () => {
               onChange={(e) => setMetricForm({ ...metricForm, mood: e.target.value })}
               className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
-              <option value="excellent">😄 Excellent</option>
-              <option value="good">🙂 Good</option>
-              <option value="okay">😐 Okay</option>
-              <option value="bad">😟 Bad</option>
-              <option value="terrible">😢 Terrible</option>
+              <option value="excellent">Excellent</option>
+              <option value="good">Good</option>
+              <option value="okay">Okay</option>
+              <option value="bad">Bad</option>
+              <option value="terrible">Terrible</option>
             </select>
           </div>
 

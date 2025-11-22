@@ -42,13 +42,13 @@ export const BucketListPage = () => {
   });
 
   const categories = [
-    { value: 'all', label: 'All', icon: '🌟', color: 'from-purple-500 to-pink-500' },
-    { value: 'travel', label: 'Travel', icon: '✈️', color: 'from-blue-500 to-cyan-500' },
-    { value: 'adventure', label: 'Adventure', icon: '🏔️', color: 'from-orange-500 to-red-500' },
-    { value: 'learning', label: 'Learning', icon: '📚', color: 'from-green-500 to-teal-500' },
-    { value: 'personal', label: 'Personal', icon: '💫', color: 'from-indigo-500 to-purple-500' },
-    { value: 'career', label: 'Career', icon: '💼', color: 'from-yellow-500 to-orange-500' },
-    { value: 'health', label: 'Health', icon: '💪', color: 'from-pink-500 to-rose-500' },
+    { value: 'all', label: 'All' },
+    { value: 'travel', label: 'Travel' },
+    { value: 'adventure', label: 'Adventure' },
+    { value: 'learning', label: 'Learning' },
+    { value: 'personal', label: 'Personal' },
+    { value: 'career', label: 'Career' },
+    { value: 'health', label: 'Health' },
   ];
 
   useEffect(() => {
@@ -173,60 +173,58 @@ export const BucketListPage = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-96">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500"></div>
+      <div className="flex items-center justify-center h-full">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-slate-400">Loading bucket list...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-8">
-      {/* Animated Background */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/3 left-1/4 w-96 h-96 bg-teal-500/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-8">
 
       {/* Header */}
-      <div className="mb-8 relative z-10">
+      <div className="mb-8">
         <div className="flex justify-between items-start mb-6">
           <div>
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-white via-purple-100 to-white bg-clip-text text-transparent mb-3">
+            <h1 className="text-4xl font-bold text-white mb-2">
               My Bucket List
             </h1>
-            <p className="text-slate-400 text-lg">Dream big and make it happen</p>
+            <p className="text-slate-400">Dream big and make it happen</p>
           </div>
           <button
             onClick={() => setShowModal(true)}
-            className="group flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40 hover:scale-105 transform"
+            className="flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-lg shadow-cyan-500/30"
           >
-            <span className="text-2xl group-hover:rotate-90 transition-transform duration-300">+</span>
-            Add Dream
+            <span className="text-xl">+</span>
+            Add Item
           </button>
         </div>
 
         {/* Stats */}
         {summary && summary.stats.total > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-            <div className="bg-slate-800/70 backdrop-blur-xl border border-slate-700/50 rounded-xl p-4">
-              <div className="text-slate-400 text-sm mb-1">Total Dreams</div>
+            <div className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-lg p-4 hover:border-cyan-500/50 transition-all">
+              <div className="text-slate-400 text-sm mb-1">Total Items</div>
               <div className="text-3xl font-bold text-white">{summary.stats.total}</div>
             </div>
-            <div className="bg-slate-800/70 backdrop-blur-xl border border-slate-700/50 rounded-xl p-4">
+            <div className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-lg p-4 hover:border-cyan-500/50 transition-all">
               <div className="text-slate-400 text-sm mb-1">Completed</div>
-              <div className="text-3xl font-bold text-green-400">{summary.stats.completed}</div>
+              <div className="text-3xl font-bold text-white">{summary.stats.completed}</div>
             </div>
-            <div className="bg-slate-800/70 backdrop-blur-xl border border-slate-700/50 rounded-xl p-4">
+            <div className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-lg p-4 hover:border-cyan-500/50 transition-all">
               <div className="text-slate-400 text-sm mb-1">In Progress</div>
-              <div className="text-3xl font-bold text-blue-400">{summary.stats.in_progress}</div>
+              <div className="text-3xl font-bold text-white">{summary.stats.in_progress}</div>
             </div>
-            <div className="bg-slate-800/70 backdrop-blur-xl border border-slate-700/50 rounded-xl p-4">
+            <div className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-lg p-4 hover:border-cyan-500/50 transition-all">
               <div className="text-slate-400 text-sm mb-1">Planning</div>
-              <div className="text-3xl font-bold text-yellow-400">{summary.stats.planning}</div>
+              <div className="text-3xl font-bold text-white">{summary.stats.planning}</div>
             </div>
-            <div className="bg-slate-800/70 backdrop-blur-xl border border-slate-700/50 rounded-xl p-4">
+            <div className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-lg p-4 hover:border-cyan-500/50 transition-all">
               <div className="text-slate-400 text-sm mb-1">Completion</div>
-              <div className="text-3xl font-bold text-purple-400">{summary.stats.completion_percentage}%</div>
+              <div className="text-3xl font-bold text-white">{summary.stats.completion_percentage}%</div>
             </div>
           </div>
         )}
@@ -235,13 +233,12 @@ export const BucketListPage = () => {
         <div className="flex flex-col gap-4">
           {/* Search */}
           <div className="relative">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">🔍</span>
             <input
               type="text"
-              placeholder="Search your dreams..."
+              placeholder="Search your bucket list..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-800/70 backdrop-blur-xl border border-slate-700/50 rounded-xl pl-12 pr-4 py-4 text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition-colors"
+              className="w-full bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors"
             />
           </div>
 
@@ -251,28 +248,27 @@ export const BucketListPage = () => {
               <button
                 key={cat.value}
                 onClick={() => setCategoryFilter(cat.value)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all transform hover:scale-105 whitespace-nowrap ${
+                className={`px-4 py-2 rounded-lg font-medium transition-all whitespace-nowrap ${
                   categoryFilter === cat.value
-                    ? `bg-gradient-to-r ${cat.color} text-white shadow-lg`
-                    : 'bg-slate-800/70 backdrop-blur-xl text-slate-400 hover:text-white border border-slate-700/50'
+                    ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
+                    : 'bg-slate-800/50 text-slate-400 hover:text-white border border-slate-700/50 hover:border-cyan-500/50'
                 }`}
               >
-                <span className="text-xl">{cat.icon}</span>
                 {cat.label}
               </button>
             ))}
           </div>
 
           {/* Status Filters */}
-          <div className="flex gap-3">
+          <div className="flex gap-2">
             {['all', 'not_started', 'planning', 'in_progress', 'completed'].map((status) => (
               <button
                 key={status}
                 onClick={() => setStatusFilter(status)}
-                className={`px-6 py-3 rounded-xl font-semibold transition-all transform hover:scale-105 ${
+                className={`px-4 py-2 rounded-lg font-medium transition-all ${
                   statusFilter === status
-                    ? 'bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg shadow-purple-500/40'
-                    : 'bg-slate-800/70 backdrop-blur-xl text-slate-400 hover:text-white border border-slate-700/50'
+                    ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
+                    : 'bg-slate-800/50 text-slate-400 hover:text-white border border-slate-700/50 hover:border-cyan-500/50'
                 }`}
               >
                 {getStatusLabel(status)}
