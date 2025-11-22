@@ -139,7 +139,14 @@ export const BucketListPage = () => {
     // Simple celebration effect
     const celebration = document.createElement('div');
     celebration.className = 'fixed inset-0 pointer-events-none z-50 flex items-center justify-center';
-    celebration.innerHTML = '<div class="text-8xl animate-bounce">🎉</div>';
+    celebration.innerHTML = `
+      <div class="animate-bounce">
+        <svg class="w-32 h-32 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M5.85 3.5a.75.75 0 00-1.117-1 9.719 9.719 0 00-2.348 4.876.75.75 0 001.479.248A8.219 8.219 0 015.85 3.5zM19.267 2.5a.75.75 0 10-1.118 1 8.22 8.22 0 011.987 4.124.75.75 0 001.48-.248A9.72 9.72 0 0019.266 2.5z"/>
+          <path fill-rule="evenodd" d="M12 2.25A6.75 6.75 0 005.25 9v.75a8.217 8.217 0 01-2.119 5.52.75.75 0 00.298 1.206c1.544.57 3.16.99 4.831 1.243a3.75 3.75 0 107.48 0 24.583 24.583 0 004.83-1.244.75.75 0 00.298-1.205 8.217 8.217 0 01-2.118-5.52V9A6.75 6.75 0 0012 2.25zM9.75 18c0-.034 0-.067.002-.1a25.05 25.05 0 004.496 0l.002.1a2.25 2.25 0 11-4.5 0z" clip-rule="evenodd"/>
+        </svg>
+      </div>
+    `;
     document.body.appendChild(celebration);
     setTimeout(() => celebration.remove(), 2000);
   };
@@ -166,7 +173,43 @@ export const BucketListPage = () => {
   };
 
   const getCategoryIcon = (category: string) => {
-    return categories.find(c => c.value === category)?.icon || '🌟';
+    const iconMap: Record<string, JSX.Element> = {
+      travel: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+      adventure: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+      ),
+      learning: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+      ),
+      personal: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      ),
+      career: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+      ),
+      health: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+      ),
+    };
+    return iconMap[category] || (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+      </svg>
+    );
   };
 
   const filteredItems = getFilteredItems();
@@ -283,7 +326,9 @@ export const BucketListPage = () => {
         {filteredItems.length === 0 ? (
           <div className="border-2 border-dashed border-slate-700/50 rounded-2xl p-20 text-center bg-slate-800/30 backdrop-blur-xl">
             <div className="w-24 h-24 bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
-              <span className="text-5xl">✨</span>
+              <svg className="w-12 h-12 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              </svg>
             </div>
             <h3 className="text-3xl font-bold text-white mb-4">Start Your Dream List</h3>
             <p className="text-slate-400 text-lg mb-8 max-w-md mx-auto">
@@ -318,8 +363,10 @@ export const BucketListPage = () => {
                       }}
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-6xl">
-                      {getCategoryIcon(item.category || 'travel')}
+                    <div className="w-full h-full flex items-center justify-center text-white">
+                      <div className="w-16 h-16">
+                        {getCategoryIcon(item.category || 'travel')}
+                      </div>
                     </div>
                   )}
                   <div className="absolute top-3 right-3 flex gap-2">
@@ -335,7 +382,9 @@ export const BucketListPage = () => {
                     <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors flex-1">
                       {item.title}
                     </h3>
-                    <span className="text-2xl ml-2">{getCategoryIcon(item.category || 'travel')}</span>
+                    <div className="text-purple-400 ml-2">
+                      {getCategoryIcon(item.category || 'travel')}
+                    </div>
                   </div>
 
                   {item.description && (
@@ -344,7 +393,9 @@ export const BucketListPage = () => {
 
                   {item.target_date && (
                     <div className="flex items-center gap-2 text-slate-400 text-sm mb-4">
-                      <span>📅</span>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
                       <span>{new Date(item.target_date).toLocaleDateString()}</span>
                     </div>
                   )}
@@ -365,13 +416,17 @@ export const BucketListPage = () => {
                       onClick={() => handleEdit(item)}
                       className="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
                     >
-                      ✏️
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                      </svg>
                     </button>
                     <button
                       onClick={() => handleDelete(item.id)}
                       className="px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
                     >
-                      🗑️
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
                     </button>
                   </div>
                 </div>
@@ -430,7 +485,7 @@ export const BucketListPage = () => {
                       className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-purple-500 transition-colors"
                     >
                       {categories.filter(c => c.value !== 'all').map(cat => (
-                        <option key={cat.value} value={cat.value}>{cat.icon} {cat.label}</option>
+                        <option key={cat.value} value={cat.value}>{cat.label}</option>
                       ))}
                     </select>
                   </div>

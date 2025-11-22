@@ -134,13 +134,41 @@ export const HabitsPage = () => {
 
   const getHabitIcon = (name: string) => {
     const lower = name.toLowerCase();
-    if (lower.includes('read')) return '📚';
-    if (lower.includes('workout') || lower.includes('exercise')) return '💪';
-    if (lower.includes('meditate') || lower.includes('meditation')) return '🧘';
-    if (lower.includes('water') || lower.includes('drink')) return '💧';
-    if (lower.includes('sleep')) return '😴';
-    if (lower.includes('code') || lower.includes('program')) return '💻';
-    return '✨';
+    if (lower.includes('read')) return (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+      </svg>
+    );
+    if (lower.includes('workout') || lower.includes('exercise')) return (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+      </svg>
+    );
+    if (lower.includes('meditate') || lower.includes('meditation')) return (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    );
+    if (lower.includes('water') || lower.includes('drink')) return (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+      </svg>
+    );
+    if (lower.includes('sleep')) return (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+      </svg>
+    );
+    if (lower.includes('code') || lower.includes('program')) return (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+      </svg>
+    );
+    return (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+      </svg>
+    );
   };
 
   const getHabitColor = (index: number) => {
@@ -188,7 +216,7 @@ export const HabitsPage = () => {
         </div>
 
         {/* Date Navigation and Filters */}
-        <div className="flex items-center justify-between flex-wrap gap-4 relative z-10">
+        <div className="flex items-center justify-between flex-wrap gap-4 relative z-20 mb-6">
           <div className="relative flex items-center gap-3 bg-slate-800/70 backdrop-blur-xl border border-slate-700/50 rounded-2xl px-6 py-4 shadow-xl">
             <button
               onClick={() => changeDate('prev')}
@@ -217,14 +245,16 @@ export const HabitsPage = () => {
             
             <button 
               onClick={() => setShowDatePicker(!showDatePicker)}
-              className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl transition-all shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30 hover:scale-110 transform text-2xl relative"
+              className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl transition-all shadow-lg shadow-blue-500/20 hover:shadow-xl hover:shadow-blue-500/30 hover:scale-110 transform relative"
             >
-              📅
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
             </button>
 
             {/* Date Picker Dropdown */}
             {showDatePicker && (
-              <div className="absolute top-full right-0 mt-3 bg-slate-800/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-5 shadow-2xl z-50 min-w-[300px] animate-in fade-in slide-in-from-top-2 duration-200">
+              <div className="absolute top-full right-0 mt-3 bg-slate-800/95 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-5 shadow-2xl z-[100] min-w-[300px] animate-in fade-in slide-in-from-top-2 duration-200">
                 <div className="flex flex-col gap-4">
                   <label className="text-slate-200 text-sm font-semibold">Select Date</label>
                   <input
@@ -286,11 +316,13 @@ export const HabitsPage = () => {
       </div>
 
       {/* Habits Grid */}
-      <div className="relative z-10">
+      <div className="relative z-0">
       {filteredHabits.length === 0 ? (
         <div className="border-2 border-dashed border-slate-700/50 rounded-2xl p-20 text-center bg-slate-800/30 backdrop-blur-xl">
           <div className="w-24 h-24 bg-gradient-to-br from-teal-500/20 to-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
-            <span className="text-5xl text-teal-400">+</span>
+            <svg className="w-12 h-12 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
           </div>
           <h3 className="text-3xl font-bold text-white mb-4">Create Your First Habit</h3>
           <p className="text-slate-400 text-lg mb-8 max-w-md mx-auto">
@@ -311,8 +343,8 @@ export const HabitsPage = () => {
               className="group bg-slate-800/70 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-6 hover:border-teal-500/50 transition-all hover:shadow-2xl hover:shadow-teal-500/20 hover:scale-105 transform cursor-pointer"
             >
               {/* Icon */}
-              <div className={`w-14 h-14 bg-gradient-to-br ${getHabitColor(index)} rounded-xl flex items-center justify-center mb-4 shadow-xl group-hover:scale-110 transition-transform`}>
-                <span className="text-3xl">{getHabitIcon(habit.name)}</span>
+              <div className={`w-14 h-14 bg-gradient-to-br ${getHabitColor(index)} rounded-xl flex items-center justify-center mb-4 shadow-xl group-hover:scale-110 transition-transform text-white`}>
+                {getHabitIcon(habit.name)}
               </div>
 
               {/* Title and Frequency */}
@@ -322,12 +354,16 @@ export const HabitsPage = () => {
               {/* Streak */}
               {habit.current_streak > 0 ? (
                 <div className="flex items-center gap-2 mb-4 bg-orange-500/10 px-3 py-2 rounded-lg border border-orange-500/20">
-                  <span className="text-orange-400 text-xl animate-pulse">🔥</span>
+                  <svg className="w-5 h-5 text-orange-400 animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2c1.5 3 4 4 7 4-3.5 3.5-3.5 8.5 0 12-4 0-7-2.5-7-6 0 0 0 0 0 0-1 2-3 3-5 3 1-3 0-5-2-7 2-1 3-2.5 3-4.5C8 1.5 10 0 12 2z" />
+                  </svg>
                   <span className="text-orange-400 font-bold">{habit.current_streak} day streak</span>
                 </div>
               ) : (
                 <div className="flex items-center gap-2 mb-4 bg-slate-700/30 px-3 py-2 rounded-lg border border-slate-600/30">
-                  <span className="text-slate-500 text-xl">⭕</span>
+                  <svg className="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
                   <span className="text-slate-500 text-sm font-medium">No streak yet</span>
                 </div>
               )}
@@ -357,14 +393,24 @@ export const HabitsPage = () => {
                       : 'bg-slate-700 text-slate-400 hover:bg-slate-600 hover:text-white'
                   }`}
                 >
-                  <span className="text-xl font-bold">{habit.completed_today ? '✓' : '○'}</span>
+                  {habit.completed_today ? (
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                    </svg>
+                  ) : (
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="9" strokeWidth={2} />
+                    </svg>
+                  )}
                 </button>
 
                 <button
                   onClick={() => handleDelete(habit.id)}
-                  className="text-slate-500 hover:text-red-400 transition-all text-2xl hover:scale-125 transform"
+                  className="text-slate-500 hover:text-red-400 transition-all hover:scale-125 transform"
                 >
-                  🗑️
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
                 </button>
               </div>
             </div>

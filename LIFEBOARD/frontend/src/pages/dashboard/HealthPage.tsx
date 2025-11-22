@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { healthService } from '../../services/health';
 import { Modal } from '../../components/ui/Modal';
 import { Input } from '../../components/ui/Input';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { HealthMetric, Workout } from '../../types/Health';
 
 export const HealthPage = () => {
@@ -102,14 +102,14 @@ export const HealthPage = () => {
     }
   };
 
-  const getMoodEmoji = (mood: string | null) => {
+  const getMoodColor = (mood: string | null) => {
     switch (mood) {
-      case 'excellent': return '😄';
-      case 'good': return '🙂';
-      case 'okay': return '😐';
-      case 'bad': return '😟';
-      case 'terrible': return '😢';
-      default: return '❓';
+      case 'excellent': return 'text-green-400';
+      case 'good': return 'text-cyan-400';
+      case 'okay': return 'text-yellow-400';
+      case 'bad': return 'text-orange-400';
+      case 'terrible': return 'text-red-400';
+      default: return 'text-slate-400';
     }
   };
 
@@ -261,28 +261,28 @@ export const HealthPage = () => {
               onClick={() => setIsMetricModalOpen(true)}
               className="flex items-center gap-2 px-4 py-3 bg-slate-700/50 hover:bg-slate-600/50 text-white rounded-lg transition-all border border-slate-600/50 hover:border-cyan-500/50"
             >
-              <span className="text-2xl">⚖️</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>
               <span className="text-sm">Log Weight</span>
             </button>
             <button
               onClick={() => setIsMetricModalOpen(true)}
               className="flex items-center gap-2 px-4 py-3 bg-slate-700/50 hover:bg-slate-600/50 text-white rounded-lg transition-all border border-slate-600/50 hover:border-cyan-500/50"
             >
-              <span className="text-2xl">😴</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
               <span className="text-sm">Log Sleep</span>
             </button>
             <button
               onClick={() => setIsMetricModalOpen(true)}
               className="flex items-center gap-2 px-4 py-3 bg-slate-700/50 hover:bg-slate-600/50 text-white rounded-lg transition-all border border-slate-600/50 hover:border-cyan-500/50"
             >
-              <span className="text-2xl">💧</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
               <span className="text-sm">Log Water</span>
             </button>
             <button
               onClick={() => setIsWorkoutModalOpen(true)}
               className="flex items-center gap-2 px-4 py-3 bg-slate-700/50 hover:bg-slate-600/50 text-white rounded-lg transition-all border border-slate-600/50 hover:border-cyan-500/50"
             >
-              <span className="text-2xl">🏃</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
               <span className="text-sm">Quick Workout</span>
             </button>
           </div>
@@ -361,7 +361,7 @@ export const HealthPage = () => {
                         {metric.mood && (
                           <div>
                             <span className="text-gray-400">Mood:</span>
-                            <span className="text-white ml-2">{getMoodEmoji(metric.mood)} {metric.mood}</span>
+                            <span className={`ml-2 capitalize ${getMoodColor(metric.mood)}`}>{metric.mood}</span>
                           </div>
                         )}
                       </div>

@@ -3,6 +3,7 @@ import { Modal } from '../../components/ui/Modal';
 import { Input } from '../../components/ui/Input';
 import { financesService } from '../../services/finances';
 import { Transaction, FinanceSummary } from '../../types/Finance';
+import { useNotification } from '../../context/NotificationContext';
 import {
   PieChart,
   Pie,
@@ -19,6 +20,7 @@ import {
 const COLORS = ['#22d3ee', '#f97316', '#a855f7', '#eab308', '#ef4444', '#10b981', '#3b82f6'];
 
 export const FinancesPage = () => {
+  const { showToast } = useNotification();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [summary, setSummary] = useState<FinanceSummary | null>(null);
   const [loading, setLoading] = useState(true);
@@ -61,17 +63,19 @@ export const FinancesPage = () => {
           ...formData,
           amount: parseFloat(formData.amount),
         });
+        showToast('Transaction updated successfully!', 'success');
       } else {
         await financesService.createTransaction({
           ...formData,
           amount: parseFloat(formData.amount),
         });
+        showToast('Transaction added successfully!', 'success');
       }
       await loadData();
       closeModal();
     } catch (error) {
       console.error('Failed to save transaction:', error);
-      alert('Failed to save transaction. Check console for details.');
+      showToast('Failed to save transaction', 'error');
     }
   };
 
@@ -79,9 +83,11 @@ export const FinancesPage = () => {
     if (window.confirm('Are you sure you want to delete this transaction?')) {
       try {
         await financesService.deleteTransaction(id);
+        showToast('Transaction deleted successfully!', 'success');
         await loadData();
       } catch (error) {
         console.error('Failed to delete transaction:', error);
+        showToast('Failed to delete transaction', 'error');
       }
     }
   };
