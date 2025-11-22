@@ -18,13 +18,15 @@ export const HealthPage = () => {
     weight: '',
     sleep_hours: '',
     water_intake: '',
-    mood: 'good'
+    mood: 'good',
+    notes: ''
   });
 
   const [workoutForm, setWorkoutForm] = useState({
     date: new Date().toISOString().split('T')[0],
     type: '',
     duration_minutes: '',
+    intensity: 'medium' as 'low' | 'medium' | 'high',
     calories_burned: '',
     notes: ''
   });
@@ -68,7 +70,8 @@ export const HealthPage = () => {
         weight: '',
         sleep_hours: '',
         water_intake: '',
-        mood: 'good'
+        mood: 'good',
+        notes: ''
       });
     } catch (error) {
       console.error('Failed to save metric:', error);
@@ -94,6 +97,7 @@ export const HealthPage = () => {
         date: new Date().toISOString().split('T')[0],
         type: '',
         duration_minutes: '',
+        intensity: 'medium',
         calories_burned: '',
         notes: ''
       });

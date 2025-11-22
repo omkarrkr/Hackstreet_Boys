@@ -254,7 +254,7 @@ export const FinancesPage = () => {
                     animationBegin={0}
                     animationDuration={800}
                   >
-                    {summary.categoryBreakdown.map((entry, index) => (
+                    {summary.categoryBreakdown.map((_entry, index) => (
                       <Cell 
                         key={`cell-${index}`} 
                         fill={COLORS[index % COLORS.length]}
@@ -281,7 +281,7 @@ export const FinancesPage = () => {
                       fontWeight: '600',
                       marginBottom: '4px',
                     }}
-                    formatter={(value: number, name: string, props: any) => [
+                    formatter={(value: number, _name: string, props: any) => [
                       formatCurrency(value),
                       props.payload.category
                     ]}
@@ -470,24 +470,6 @@ export const FinancesPage = () => {
           isOpen={isModalOpen}
           onClose={closeModal}
           title={editingTransaction ? 'Edit Transaction' : 'Add Transaction'}
-          footer={
-            <>
-              <button
-                type="button"
-                onClick={closeModal}
-                className="px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={saveTransaction}
-                className="px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors"
-              >
-                {editingTransaction ? 'Update' : 'Add'}
-              </button>
-            </>
-          }
         >
           <div className="space-y-4">
             <div>
@@ -562,6 +544,23 @@ export const FinancesPage = () => {
               />
               <span className="text-sm text-gray-700">Recurring transaction</span>
             </label>
+
+            <div className="flex gap-3 pt-4">
+              <button
+                type="button"
+                onClick={saveTransaction}
+                className="flex-1 px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors"
+              >
+                {editingTransaction ? 'Update' : 'Add'}
+              </button>
+              <button
+                type="button"
+                onClick={closeModal}
+                className="flex-1 px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </Modal>
       )}
