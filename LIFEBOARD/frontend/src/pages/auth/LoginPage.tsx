@@ -28,8 +28,9 @@ export const LoginPage = () => {
   };
 
   const handleGoogleLogin = () => {
-    // TODO: Implement Google OAuth
-    alert('Google Sign-In coming soon!');
+    // Google OAuth - requires setup in Google Cloud Console
+    // See GOOGLE-OAUTH-SETUP.md for implementation guide
+    setError('Google Sign-In requires additional setup. Please use email/password for now or contact administrator.');
   };
 
   return (

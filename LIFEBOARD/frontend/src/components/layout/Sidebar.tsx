@@ -10,6 +10,7 @@ const navItems = [
   { path: '/dashboard/todos', label: 'To-Do List', icon: '📝' },
   { path: '/dashboard/health', label: 'Health', icon: '💪' },
   { path: '/dashboard/bucketlist', label: 'Bucket List', icon: '🌟' },
+  { path: '/dashboard/settings', label: 'Settings', icon: '⚙️' },
 ];
 
 export const Sidebar = () => {
@@ -60,10 +61,7 @@ export const Sidebar = () => {
       </nav>
 
       {/* Bottom Actions */}
-      <div className="p-4 border-t border-slate-700/50 space-y-2">
-        <button className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-3 rounded-lg font-medium hover:from-cyan-600 hover:to-blue-600 transition-all">
-          Upgrade to Pro
-        </button>
+      <div className="p-4 border-t border-slate-700/50">
         <button
           onClick={handleLogout}
           className="w-full flex items-center gap-2 px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-800/50 rounded-lg transition-all"

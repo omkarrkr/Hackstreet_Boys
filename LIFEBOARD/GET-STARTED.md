@@ -274,5 +274,3 @@ You have:
 - ✅ Full documentation
 
 **Next step**: Open `FRONTEND-EXAMPLE.md` and start building the LoginPage!
-
-Good luck! 💪

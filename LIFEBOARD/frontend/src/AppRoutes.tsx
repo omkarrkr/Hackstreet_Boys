@@ -10,6 +10,7 @@ import { HabitsPage } from './pages/dashboard/HabitsPage';
 import { TodosPage } from './pages/dashboard/TodosPage';
 import { HealthPage } from './pages/dashboard/HealthPage';
 import { BucketListPage } from './pages/dashboard/BucketListPage';
+import { SettingsPage } from './pages/dashboard/SettingsPage';
 
 export const AppRoutes = () => {
   return (
@@ -33,6 +34,7 @@ export const AppRoutes = () => {
         <Route path="todos" element={<TodosPage />} />
         <Route path="health" element={<HealthPage />} />
         <Route path="bucketlist" element={<BucketListPage />} />
+        <Route path="settings" element={<SettingsPage />} />
       </Route>
     </Routes>
   );
