@@ -8,6 +8,7 @@ const navItems = [
   { path: '/dashboard/habits', label: 'Habits', icon: '✅' },
   { path: '/dashboard/todos', label: 'To-Do List', icon: '📝' },
   { path: '/dashboard/health', label: 'Health', icon: '💪' },
+  { path: '/dashboard/bucketlist', label: 'Bucket List', icon: '🌟' },
 ];
 
 export const Sidebar = () => {
