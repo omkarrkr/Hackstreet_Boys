@@ -18,6 +18,7 @@ interface BucketListSummary {
 export const BucketListPage = () => {
   const [summary, setSummary] = useState<BucketListSummary | null>(null);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [editingItem, setEditingItem] = useState<BucketItem | null>(null);
   const [categoryFilter, setCategoryFilter] = useState('all');
@@ -71,7 +72,9 @@ export const BucketListPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitting(true);
     try {
+      console.log('Submitting form data:', { ...formData, image_url: formData.image_url ? 'base64...' : 'none' });
       if (editingItem) {
         await bucketlistService.update(editingItem.id, formData);
       } else {
@@ -79,9 +82,12 @@ export const BucketListPage = () => {
       }
       setShowModal(false);
       resetForm();
-      loadBucketList();
-    } catch (error) {
+      await loadBucketList();
+    } catch (error: any) {
       console.error('Failed to save item:', error);
+      alert(`Failed to save: ${error.response?.data?.message || error.message || 'Unknown error'}`);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -239,10 +245,10 @@ export const BucketListPage = () => {
           </div>
           <button
             onClick={() => setShowModal(true)}
-            className="flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-6 py-3 rounded-lg font-medium transition-all shadow-lg shadow-cyan-500/30"
+            className="flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-5 py-2.5 rounded-lg font-medium transition-colors"
           >
             <span className="text-xl">+</span>
-            Add Item
+            Add Dream
           </button>
         </div>
 
@@ -336,7 +342,7 @@ export const BucketListPage = () => {
             </p>
             <button
               onClick={() => setShowModal(true)}
-              className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white px-10 py-4 rounded-xl font-semibold transition-all shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-500/40 hover:scale-105 transform"
+              className="bg-cyan-600 hover:bg-cyan-700 text-white px-8 py-3 rounded-lg font-medium transition-colors"
             >
               Add Your First Dream
             </button>
@@ -350,7 +356,7 @@ export const BucketListPage = () => {
               >
                 {/* Image */}
                 <div 
-                  className="relative h-48 bg-gradient-to-br from-slate-700 to-slate-800 overflow-hidden"
+                  className="relative h-48 bg-gradient-to-br from-slate-700 to-slate-800 overflow-hidden cursor-pointer"
                   onClick={() => item.image_url && setShowImageModal(item.image_url)}
                 >
                   {item.image_url ? (
@@ -359,7 +365,14 @@ export const BucketListPage = () => {
                       alt={item.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                       onError={(e) => {
-                        e.currentTarget.src = 'https://via.placeholder.com/400x300?text=Dream';
+                        e.currentTarget.style.display = 'none';
+                        const parent = e.currentTarget.parentElement;
+                        if (parent) {
+                          const fallback = document.createElement('div');
+                          fallback.className = 'w-full h-full flex items-center justify-center text-white absolute inset-0';
+                          fallback.innerHTML = `<div class="w-16 h-16">${parent.getAttribute('data-icon') || ''}</div>`;
+                          parent.appendChild(fallback);
+                        }
                       }}
                     />
                   ) : (
@@ -500,14 +513,78 @@ export const BucketListPage = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Image URL</label>
-                  <input
-                    type="url"
-                    value={formData.image_url}
-                    onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                    placeholder="https://example.com/image.jpg"
-                    className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition-colors"
-                  />
+                  <label className="block text-sm font-medium text-slate-300 mb-2">Upload Image (Optional)</label>
+                  <div className="space-y-3">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          // Check file size (max 5MB)
+                          if (file.size > 5 * 1024 * 1024) {
+                            alert('Image size should be less than 5MB');
+                            e.target.value = '';
+                            return;
+                          }
+                          
+                          // Compress and resize image
+                          const reader = new FileReader();
+                          reader.onload = (event) => {
+                            const img = new Image();
+                            img.onload = () => {
+                              const canvas = document.createElement('canvas');
+                              let width = img.width;
+                              let height = img.height;
+                              
+                              // Resize if too large
+                              const maxSize = 800;
+                              if (width > height && width > maxSize) {
+                                height = (height * maxSize) / width;
+                                width = maxSize;
+                              } else if (height > maxSize) {
+                                width = (width * maxSize) / height;
+                                height = maxSize;
+                              }
+                              
+                              canvas.width = width;
+                              canvas.height = height;
+                              const ctx = canvas.getContext('2d');
+                              ctx?.drawImage(img, 0, 0, width, height);
+                              
+                              // Convert to base64 with compression
+                              const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                              setFormData({ ...formData, image_url: compressedBase64 });
+                            };
+                            img.src = event.target?.result as string;
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                      className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-cyan-600 file:text-white hover:file:bg-cyan-700 file:cursor-pointer cursor-pointer"
+                    />
+                    {formData.image_url && (
+                      <div className="relative">
+                        <p className="text-xs text-slate-400 mb-2">Preview:</p>
+                        <div className="relative h-40 bg-slate-800 rounded-lg overflow-hidden">
+                          <img
+                            src={formData.image_url}
+                            alt="Preview"
+                            className="w-full h-full object-cover"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setFormData({ ...formData, image_url: '' })}
+                            className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg transition-colors"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-2">Status</label>
@@ -525,9 +602,10 @@ export const BucketListPage = () => {
                 <div className="flex gap-3 pt-4">
                   <button
                     type="submit"
-                    className="flex-1 bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-medium py-3 rounded-lg transition-all shadow-lg shadow-purple-500/20"
+                    disabled={submitting}
+                    className="flex-1 bg-cyan-600 hover:bg-cyan-700 disabled:bg-cyan-800 disabled:cursor-not-allowed text-white font-medium py-2.5 rounded-lg transition-colors"
                   >
-                    {editingItem ? 'Update Dream' : 'Add Dream'}
+                    {submitting ? 'Saving...' : (editingItem ? 'Update Dream' : 'Add Dream')}
                   </button>
                   <button
                     type="button"

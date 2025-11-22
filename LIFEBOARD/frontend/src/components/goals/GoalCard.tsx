@@ -64,7 +64,7 @@ export const GoalCard = ({ goal, onView }: GoalCardProps) => {
         
         <button
           onClick={() => onView(goal)}
-          className="px-4 py-2 bg-cyan-500 hover:bg-cyan-600 text-white text-sm font-medium rounded-lg transition-colors"
+          className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-medium rounded-lg transition-colors"
         >
           View
         </button>

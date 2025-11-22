@@ -43,6 +43,7 @@ export const Sidebar = () => {
             <li key={item.path}>
               <NavLink
                 to={item.path}
+                end={item.path === '/dashboard'}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
                     isActive

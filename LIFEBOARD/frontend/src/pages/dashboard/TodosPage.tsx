@@ -150,7 +150,7 @@ export const TodosPage = () => {
           <h1 className="text-4xl font-bold text-white">To-Do List</h1>
           <button
             onClick={() => openModal()}
-            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg"
+            className="px-5 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors"
           >
             + Add Task
           </button>
@@ -358,7 +358,7 @@ export const TodosPage = () => {
           <div className="flex gap-3 pt-4">
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all"
+              className="flex-1 px-4 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors"
             >
               {editingTask ? 'Update' : 'Add'}
             </button>

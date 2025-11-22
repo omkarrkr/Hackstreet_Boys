@@ -157,7 +157,7 @@ export const HealthPage = () => {
             <div className="flex gap-3">
               <button
                 onClick={() => setIsMetricModalOpen(true)}
-                className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all shadow-lg hover:shadow-cyan-500/30"
+                className="px-5 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors"
               >
                 + Log Metric
               </button>
@@ -174,9 +174,9 @@ export const HealthPage = () => {
           <div className="flex gap-2">
             <button
               onClick={() => setPeriod('week')}
-              className={`px-4 py-2 rounded-lg transition-all ${
+              className={`px-4 py-2 rounded-lg transition-colors ${
                 period === 'week'
-                  ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
+                  ? 'bg-cyan-600 text-white'
                   : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700/50 border border-slate-700/50'
               }`}
             >
@@ -184,9 +184,9 @@ export const HealthPage = () => {
             </button>
             <button
               onClick={() => setPeriod('month')}
-              className={`px-4 py-2 rounded-lg transition-all ${
+              className={`px-4 py-2 rounded-lg transition-colors ${
                 period === 'month'
-                  ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
+                  ? 'bg-cyan-600 text-white'
                   : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700/50 border border-slate-700/50'
               }`}
             >
@@ -506,7 +506,7 @@ export const HealthPage = () => {
           <div className="flex gap-3 pt-4">
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-lg hover:from-purple-600 hover:to-pink-700 transition-all"
+              className="flex-1 px-4 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors"
             >
               Log Metric
             </button>
@@ -572,7 +572,7 @@ export const HealthPage = () => {
           <div className="flex gap-3 pt-4">
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-600 text-white rounded-lg hover:from-blue-600 hover:to-cyan-700 transition-all"
+              className="flex-1 px-4 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors"
             >
               Log Workout
             </button>

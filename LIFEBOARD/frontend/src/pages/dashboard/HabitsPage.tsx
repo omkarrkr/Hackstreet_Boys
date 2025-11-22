@@ -208,9 +208,9 @@ export const HabitsPage = () => {
           </div>
           <button
             onClick={() => setShowModal(true)}
-            className="group flex items-center gap-2 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-lg shadow-teal-500/30 hover:shadow-xl hover:shadow-teal-500/40 hover:scale-105 transform"
+            className="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-5 py-2.5 rounded-lg font-medium transition-colors"
           >
-            <span className="text-2xl group-hover:rotate-90 transition-transform duration-300">+</span>
+            <span className="text-xl">+</span>
             New Habit
           </button>
         </div>
@@ -265,7 +265,7 @@ export const HabitsPage = () => {
                   />
                   <button
                     onClick={goToToday}
-                    className="w-full bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white py-3 rounded-xl transition-all font-semibold shadow-lg shadow-teal-500/20 hover:shadow-xl hover:shadow-teal-500/30"
+                    className="w-full bg-teal-600 hover:bg-teal-700 text-white py-2.5 rounded-lg transition-colors font-medium"
                   >
                     Jump to Today
                   </button>
@@ -283,30 +283,30 @@ export const HabitsPage = () => {
           <div className="flex gap-3">
             <button
               onClick={() => setFilter('all')}
-              className={`px-8 py-3 rounded-xl font-semibold transition-all transform hover:scale-105 ${
+              className={`px-6 py-2.5 rounded-lg font-medium transition-colors ${
                 filter === 'all'
-                  ? 'bg-gradient-to-r from-teal-500 to-teal-600 text-white shadow-lg shadow-teal-500/40'
-                  : 'bg-slate-800/70 backdrop-blur-xl text-slate-400 hover:text-white border border-slate-700/50 hover:border-teal-500/50'
+                  ? 'bg-teal-600 text-white'
+                  : 'bg-slate-800/70 text-slate-400 hover:text-white border border-slate-700 hover:border-teal-600'
               }`}
             >
               All
             </button>
             <button
               onClick={() => setFilter('completed')}
-              className={`px-8 py-3 rounded-xl font-semibold transition-all transform hover:scale-105 ${
+              className={`px-6 py-2.5 rounded-lg font-medium transition-colors ${
                 filter === 'completed'
-                  ? 'bg-gradient-to-r from-teal-500 to-teal-600 text-white shadow-lg shadow-teal-500/40'
-                  : 'bg-slate-800/70 backdrop-blur-xl text-slate-400 hover:text-white border border-slate-700/50 hover:border-teal-500/50'
+                  ? 'bg-teal-600 text-white'
+                  : 'bg-slate-800/70 text-slate-400 hover:text-white border border-slate-700 hover:border-teal-600'
               }`}
             >
               Completed
             </button>
             <button
               onClick={() => setFilter('pending')}
-              className={`px-8 py-3 rounded-xl font-semibold transition-all transform hover:scale-105 ${
+              className={`px-6 py-2.5 rounded-lg font-medium transition-colors ${
                 filter === 'pending'
-                  ? 'bg-gradient-to-r from-teal-500 to-teal-600 text-white shadow-lg shadow-teal-500/40'
-                  : 'bg-slate-800/70 backdrop-blur-xl text-slate-400 hover:text-white border border-slate-700/50 hover:border-teal-500/50'
+                  ? 'bg-teal-600 text-white'
+                  : 'bg-slate-800/70 text-slate-400 hover:text-white border border-slate-700 hover:border-teal-600'
               }`}
             >
               Pending
@@ -330,7 +330,7 @@ export const HabitsPage = () => {
           </p>
           <button
             onClick={() => setShowModal(true)}
-            className="bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white px-10 py-4 rounded-xl font-semibold transition-all shadow-lg shadow-teal-500/30 hover:shadow-xl hover:shadow-teal-500/40 hover:scale-105 transform"
+            className="bg-teal-600 hover:bg-teal-700 text-white px-8 py-3 rounded-lg font-medium transition-colors"
           >
             Add a Habit
           </button>

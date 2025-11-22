@@ -19,7 +19,7 @@ export const AIRoadmapCard = ({ onGenerate }: AIRoadmapCardProps) => {
         
         <button
           onClick={onGenerate}
-          className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-600 hover:to-indigo-600 text-white font-medium rounded-lg transition-all duration-300 transform hover:scale-105"
+          className="px-5 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white font-medium rounded-lg transition-colors"
         >
           Get Started
         </button>
