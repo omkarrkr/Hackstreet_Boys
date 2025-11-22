@@ -243,13 +243,24 @@ export const BucketListPage = () => {
             </h1>
             <p className="text-slate-400">Dream big and make it happen</p>
           </div>
-          <button
-            onClick={() => setShowModal(true)}
-            className="flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-5 py-2.5 rounded-lg font-medium transition-colors"
-          >
-            <span className="text-xl">+</span>
-            Add Dream
-          </button>
+          <div className="flex gap-3">
+            <button
+              onClick={() => alert('AI Analysis - Coming Soon!\n\nThis feature will analyze your bucket list items, suggest achievable goals, and provide personalized action plans.')}
+              className="flex items-center gap-2 bg-slate-700 hover:bg-slate-600 text-white px-5 py-2.5 rounded-lg font-medium transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+              AI Analysis
+            </button>
+            <button
+              onClick={() => setShowModal(true)}
+              className="flex items-center gap-2 bg-cyan-600 hover:bg-cyan-700 text-white px-5 py-2.5 rounded-lg font-medium transition-colors"
+            >
+              <span className="text-xl">+</span>
+              Add Dream
+            </button>
+          </div>
         </div>
 
         {/* Stats */}
