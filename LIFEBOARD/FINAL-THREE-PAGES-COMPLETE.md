@@ -5,7 +5,7 @@
 
 ---
 
-## What Was Just Completed
+## What Was Just Completed Now
 
 I've successfully implemented the final 3 pages to complete the LifeBoard application:
 
