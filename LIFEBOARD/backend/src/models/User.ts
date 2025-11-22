@@ -41,3 +41,18 @@ export const findUserById = async (id: string): Promise<User | null> => {
   if (error && error.code !== 'PGRST116') throw error;
   return data;
 };
+
+export const updateUser = async (
+  id: string,
+  updates: Partial<User>
+): Promise<User> => {
+  const { data, error } = await supabase
+    .from('users')
+    .update(updates)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
+};

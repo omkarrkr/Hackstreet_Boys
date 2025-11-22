@@ -7,6 +7,7 @@ import habitsRoutes from './routes/habits';
 import tasksRoutes from './routes/tasks';
 import healthRoutes from './routes/health';
 import bucketlistRoutes from './routes/bucketlist';
+import userRoutes from './routes/user';
 import { errorHandler } from './middleware/errorHandler';
 
 const app = express();
@@ -20,6 +21,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/auth', authRoutes);
+app.use('/user', userRoutes);
 app.use('/goals', goalsRoutes);
 app.use('/finances', financesRoutes);
 app.use('/habits', habitsRoutes);

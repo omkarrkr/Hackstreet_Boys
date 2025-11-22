@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { userService } from '../../services/user';
 
 export const SettingsPage = () => {
   const { user } = useAuth();
@@ -24,11 +25,12 @@ export const SettingsPage = () => {
     setMessage('');
 
     try {
-      // TODO: Implement profile update API call
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+      await userService.updateProfile(profileForm);
       setMessage('Profile updated successfully!');
-    } catch (error) {
-      setMessage('Failed to update profile');
+      // Reload page to update user context
+      setTimeout(() => window.location.reload(), 1500);
+    } catch (error: any) {
+      setMessage(error.response?.data?.message || 'Failed to update profile');
     } finally {
       setLoading(false);
     }
@@ -45,13 +47,21 @@ export const SettingsPage = () => {
       return;
     }
 
+    if (passwordForm.new_password.length < 6) {
+      setMessage('Password must be at least 6 characters');
+      setLoading(false);
+      return;
+    }
+
     try {
-      // TODO: Implement password change API call
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+      await userService.changePassword({
+        current_password: passwordForm.current_password,
+        new_password: passwordForm.new_password,
+      });
       setMessage('Password changed successfully!');
       setPasswordForm({ current_password: '', new_password: '', confirm_password: '' });
-    } catch (error) {
-      setMessage('Failed to change password');
+    } catch (error: any) {
+      setMessage(error.response?.data?.message || 'Failed to change password');
     } finally {
       setLoading(false);
     }
@@ -70,30 +80,30 @@ export const SettingsPage = () => {
         <div className="flex gap-2 mb-6">
           <button
             onClick={() => setActiveTab('profile')}
-            className={`px-4 py-2 rounded-lg font-medium transition-all ${
+            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               activeTab === 'profile'
-                ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
-                : 'bg-slate-800/50 text-slate-400 hover:text-white border border-slate-700/50 hover:border-cyan-500/50'
+                ? 'bg-cyan-600 text-white'
+                : 'bg-slate-800/50 text-slate-400 hover:text-white border border-slate-700/50'
             }`}
           >
             Profile
           </button>
           <button
             onClick={() => setActiveTab('account')}
-            className={`px-4 py-2 rounded-lg font-medium transition-all ${
+            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               activeTab === 'account'
-                ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
-                : 'bg-slate-800/50 text-slate-400 hover:text-white border border-slate-700/50 hover:border-cyan-500/50'
+                ? 'bg-cyan-600 text-white'
+                : 'bg-slate-800/50 text-slate-400 hover:text-white border border-slate-700/50'
             }`}
           >
             Account
           </button>
           <button
             onClick={() => setActiveTab('preferences')}
-            className={`px-4 py-2 rounded-lg font-medium transition-all ${
+            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               activeTab === 'preferences'
-                ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/30'
-                : 'bg-slate-800/50 text-slate-400 hover:text-white border border-slate-700/50 hover:border-cyan-500/50'
+                ? 'bg-cyan-600 text-white'
+                : 'bg-slate-800/50 text-slate-400 hover:text-white border border-slate-700/50'
             }`}
           >
             Preferences
@@ -144,7 +154,7 @@ export const SettingsPage = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all shadow-lg shadow-cyan-500/30 disabled:opacity-50"
+                  className="px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Saving...' : 'Save Changes'}
                 </button>
@@ -198,7 +208,7 @@ export const SettingsPage = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-lg hover:from-cyan-600 hover:to-blue-600 transition-all shadow-lg shadow-cyan-500/30 disabled:opacity-50"
+                  className="px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Changing...' : 'Change Password'}
                 </button>
@@ -217,7 +227,17 @@ export const SettingsPage = () => {
             <div>
               <h2 className="text-2xl font-semibold text-white mb-6">Preferences</h2>
               
-              <div className="space-y-6">
+              <div className="text-center py-12">
+                <div className="w-20 h-20 bg-slate-700/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-10 h-10 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-white mb-2">Coming Soon</h3>
+                <p className="text-slate-400">Preferences and customization options will be available in a future update.</p>
+              </div>
+              
+              <div className="space-y-6 opacity-50 pointer-events-none">
                 <div>
                   <h3 className="text-lg font-medium text-white mb-4">Notifications</h3>
                   <div className="space-y-3">
